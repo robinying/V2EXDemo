@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_hot"
+        android:checked="true"
+        android:icon="@drawable/ic_table_hot"
+        android:title="@string/table_hot" />
+
+    <item
+        android:id="@+id/menu_latest"
+        android:icon="@drawable/ic_table_latest"
+        android:title="@string/table_latest" />
+
+    <item
+        android:id="@+id/menu_node"
+        android:icon="@drawable/ic_table_android"
+        android:title="@string/table_node" />
+
+
+</menu>

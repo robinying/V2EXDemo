@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">V2EXDemo</string>
+
+    <string name="table_hot">热门</string>
+    <string name="table_latest">最新</string>
+    <string name="table_node">节点</string>
+    <string name="error_occurred">不好意思App开小差了。</string>
+</resources>
