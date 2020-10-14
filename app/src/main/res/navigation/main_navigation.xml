@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/mainFragment">
 
@@ -9,7 +10,16 @@
         android:name="com.robin.v2exdemo.ui.fragment.MainFragment"
         android:label="MainFragment">
 
+
     </fragment>
+
+    <action
+        android:id="@+id/action_to_gLDemoFragment"
+        app:destination="@id/gLDemoFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 
     <action
         android:id="@+id/action_to_webFragment"
@@ -22,6 +32,52 @@
     <fragment
         android:id="@+id/webFragment"
         android:name="com.robin.v2exdemo.ui.fragment.WebFragment"
-        android:label="WebFragment"/>
+        android:label="WebFragment" />
 
+    <action
+        android:id="@+id/action_to_gLOneFragment"
+        app:destination="@id/gLOneFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <action
+        android:id="@+id/action_to_airHockeyFragment"
+        app:destination="@id/airHockeyFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <action
+        android:id="@+id/action_to_basicGraphFragment"
+        app:destination="@id/basicGraphFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <fragment
+        android:id="@+id/gLOneFragment"
+        android:name="com.robin.v2exdemo.ui.fragment.GLOneFragment"
+        android:label="GLOneFragment"
+        tools:layout="@layout/fragment_gl_one" />
+
+
+    <fragment
+        android:id="@+id/airHockeyFragment"
+        android:name="com.robin.v2exdemo.ui.fragment.AirHockeyFragment"
+        android:label="AirHockeyFragment"
+        tools:layout="@layout/fragment_gl_one" />
+
+    <fragment
+        android:id="@+id/gLDemoFragment"
+        android:name="com.robin.v2exdemo.ui.fragment.GLDemoFragment"
+        android:label="GLDemoFragment" />
+
+    <fragment
+        android:id="@+id/basicGraphFragment"
+        android:name="com.robin.v2exdemo.ui.fragment.BasicGraphFragment"
+        android:label="BasicGraphFragment" />
 </navigation>

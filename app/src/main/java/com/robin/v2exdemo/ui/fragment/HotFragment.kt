@@ -1,9 +1,12 @@
 package com.robin.v2exdemo.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemLongClickListener
 import com.kingja.loadsir.core.LoadService
 import com.robin.v2exdemo.R
 import com.robin.v2exdemo.app.base.BaseFragment
@@ -47,6 +50,16 @@ class HotFragment : BaseFragment<HotViewModel, FragmentHotBinding>() {
                     putString("webTitle", hotBean.title)
                 })
             }
+        }
+        hotAdapter.setOnItemLongClickListener { adapter, view, position ->
+            run {
+                when(position){
+                    0->{
+                        nav().navigate(R.id.action_to_gLDemoFragment)
+                    }
+                }
+            }
+            true
         }
 
     }

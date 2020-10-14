@@ -215,6 +215,18 @@ fun Toolbar.initCenterClose(
     return this
 }
 
+
+/*
+* 初始化标题居中 toolbar
+* */
+fun Toolbar.initCenter(
+    context: Context,
+    titleStr: String = ""
+): Toolbar {
+    setBackgroundColor(SettingUtil.getColor(appContext))
+    setTitleCenter(context,titleStr)
+    return this
+}
 /**
  * 初始化有返回键的toolbar
  */

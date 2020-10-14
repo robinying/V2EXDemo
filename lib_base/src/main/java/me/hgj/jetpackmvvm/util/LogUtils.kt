@@ -10,7 +10,7 @@ import me.hgj.jetpackmvvm.ext.util.openLog
  * 描述　:
  */
 object LogUtils {
-    private const val DEFAULT_TAG = "JetpackMvvm"
+    private const val DEFAULT_TAG = "BaseLog"
     fun debugInfo(tag: String?, msg: String?) {
         if (!openLog || TextUtils.isEmpty(msg)) {
             return

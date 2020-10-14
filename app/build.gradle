@@ -26,10 +26,21 @@ android {
     }
     signingConfigs {
         app {
-            keyAlias KEY_ALIAS
-            keyPassword KEY_PASSWORD
+            Properties properties = new Properties()
+            InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
+            properties.load( inputStream )
+
+            //读取文件
+            def STORE_FILE = properties.getProperty('STORE_FILE')
+
+            //读取字段
+            def key_keyAlias = properties.getProperty('KEY_ALIAS')
+            def key_keyPassword = properties.getProperty('KEY_PASSWORD' )
+            def key_storePassword = properties.getProperty('STORE_PASSWORD')
+            keyAlias key_keyAlias
+            keyPassword key_keyPassword
             storeFile file(STORE_FILE)
-            storePassword STORE_PASSWORD
+            storePassword key_storePassword
         }
     }
     buildTypes {

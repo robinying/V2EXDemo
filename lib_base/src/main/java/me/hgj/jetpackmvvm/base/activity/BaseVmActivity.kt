@@ -24,6 +24,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
 
     lateinit var mViewModel: VM
 
+    lateinit var mActivity: AppCompatActivity
+
     abstract fun layoutId(): Int
 
     abstract fun initView(savedInstanceState: Bundle?)
@@ -34,6 +36,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mActivity = this
         if (!isUserDb) {
             setContentView(layoutId())
         } else {
