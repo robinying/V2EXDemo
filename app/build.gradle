@@ -53,8 +53,8 @@ android {
         }
 
         release {
-            minifyEnabled false//开启混淆
-            shrinkResources false
+            minifyEnabled true//开启混淆
+            shrinkResources true
             zipAlignEnabled true//去除无用资源
             signingConfig signingConfigs.app
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -147,6 +147,9 @@ dependencies {
     implementation("com.liulishuo.filedownloader:library:1.7.7") {
         exclude group: "com.android.support"
     }
+    //doraemonkit
+    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:3.2.0'
+    releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:3.2.0'
     //lottie
     implementation 'com.airbnb.android:lottie:3.4.0'
     //高德

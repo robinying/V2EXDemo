@@ -13,6 +13,12 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/showFragment"
+        android:name="com.robin.v2exdemo.ui.fragment.ShowFragment"
+        android:label="ShowFragment">
+
+    </fragment>
     <action
         android:id="@+id/action_to_gLDemoFragment"
         app:destination="@id/gLDemoFragment"
@@ -58,6 +64,14 @@
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right" />
 
+    <action
+        android:id="@+id/action_to_uiListFragment"
+        app:destination="@id/uiListFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
     <fragment
         android:id="@+id/gLOneFragment"
         android:name="com.robin.v2exdemo.ui.fragment.GLOneFragment"
@@ -80,4 +94,9 @@
         android:id="@+id/basicGraphFragment"
         android:name="com.robin.v2exdemo.ui.fragment.BasicGraphFragment"
         android:label="BasicGraphFragment" />
+
+    <fragment
+        android:id="@+id/uiListFragment"
+        android:name="com.robin.v2exdemo.ui.fragment.UIListFragment"
+        android:label="UIListFragment" />
 </navigation>

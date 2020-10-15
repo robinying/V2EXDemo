@@ -5,6 +5,7 @@ import android.hardware.Camera
 import androidx.multidex.MultiDex
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.blankj.utilcode.util.Utils
+import com.didichuxing.doraemonkit.DoraemonKit
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.robin.v2exdemo.BuildConfig
@@ -48,6 +49,9 @@ class App : BaseApp() {
         instance = this
         MultiDex.install(this)
         MMKV.initialize(this.filesDir.absolutePath + "/mmkv")
+        //DoraemonKit初始化
+        DoraemonKit.disableUpload()
+        DoraemonKit.install(this, "0bc13675df914f83e5a3b03af5dde387")
         //界面加载管理 初始化
         LoadSir.beginBuilder()
             .addCallback(LoadingCallback())//加载
@@ -82,7 +86,7 @@ class App : BaseApp() {
             .errorActivity(ErrorActivity::class.java) //发生错误跳转的activity
             .eventListener(null) //允许你指定事件侦听器，以便在库显示错误活动 default: null
             .apply()
-        Utils.init(context)
+        Utils.init(this)
     }
 
 }
