@@ -6,17 +6,20 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import com.robin.v2exdemo.R
 import com.robin.v2exdemo.app.base.BaseFragment
 import com.robin.v2exdemo.app.ext.corner
+import com.robin.v2exdemo.app.ext.init
 import com.robin.v2exdemo.app.ext.initCenter
 import com.robin.v2exdemo.app.ext.showMessage
 import com.robin.v2exdemo.data.model.bean.NodeInfo
 import com.robin.v2exdemo.databinding.FragmentShowBinding
+import com.robin.v2exdemo.ui.adapter.SpinnerAdapter
 import com.robin.v2exdemo.viewmodel.ShowViewModel
 import kotlinx.android.synthetic.main.fragment_show.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.ext.navigateAction
 import me.hgj.jetpackmvvm.ext.parseState
@@ -24,16 +27,18 @@ import me.hgj.jetpackmvvm.ext.util.toHtml
 import me.hgj.jetpackmvvm.util.LogUtils
 import java.lang.Exception
 
-class ShowFragment : BaseFragment<ShowViewModel, FragmentShowBinding>() {
-
+class ShowFragment : BaseFragment<ShowViewModel, FragmentShowBinding>(),
+    AdapterView.OnItemSelectedListener {
+    var isSpinnerFirst = true
 
     override fun layoutId(): Int {
         return R.layout.fragment_show
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        toolbar.initCenter(mActivity, "我的")
+        toolbar.init( "我的")
+        spinner.adapter = SpinnerAdapter(mActivity, resources.getStringArray(R.array.views))
+        spinner.onItemSelectedListener = this
         refresh_layout.setOnRefreshListener {
             mViewModel.getShowInfo("python")
             mViewModel.getShowInfo("android")
@@ -121,42 +126,39 @@ class ShowFragment : BaseFragment<ShowViewModel, FragmentShowBinding>() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.demo_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.custom_view -> {
-                nav().navigate(R.id.action_to_uiListFragment)
-            }
-            R.id.openGl -> {
-                nav().navigate(R.id.action_to_gLDemoFragment)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        mActivity.setSupportActionBar(null)
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtils.debugInfo("showFragment onResume")
-        toolbar.let {
-            mActivity.setSupportActionBar(it)
-            it.title = ""
-        }
     }
 
 
     override fun onPause() {
         super.onPause()
-        LogUtils.debugInfo("showFragment onPause")
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        LogUtils.debugInfo("onNothingSelected :$isSpinnerFirst ")
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        LogUtils.debugInfo("isSpinnerFirst :$isSpinnerFirst  ---position:$position")
+        if (isSpinnerFirst) {
+            view?.setVisibility(View.INVISIBLE)
+            isSpinnerFirst = false
+            return
+        }
+        when (position) {
+            0 -> {
+                nav().navigate(R.id.action_to_uiListFragment)
+            }
+            1 -> {
+                nav().navigate(R.id.action_to_gLDemoFragment)
+            }
+        }
+
     }
 
 }
