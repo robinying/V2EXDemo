@@ -39,4 +39,12 @@
         <item name="android:background">@color/gray</item>
     </style>
 
+
+    <!--*********************************************
+    *                  GuideCaseView                *
+    **********************************************-->
+    <style name="DefaultGuideCaseTitleStyle" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 </resources>

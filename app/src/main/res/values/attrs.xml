@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DPTextView">
+        <attr name="android:background" />
+        <attr name="android:textColor" />
+        <attr name="android:lineSpacingExtra" />
+        <attr name="android:lineSpacingMultiplier" />
+        <attr name="textPressedColor" format="color" />
+        <attr name="textDisableColor" format="color" />
+        <attr name="strokeMode" format="boolean" />
+        <attr name="pressWithStrokeMode" format="boolean" />
+        <attr name="stroke_Width" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="backgroundPressedColor" format="color" />
+        <attr name="backgroundDisableColor" format="color" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_topLeftRadius" format="dimension" />
+        <attr name="corner_topRightRadius" format="dimension" />
+        <attr name="corner_bottomLeftRadius" format="dimension" />
+        <attr name="corner_bottomRightRadius" format="dimension" />
+        <attr name="shadow" format="boolean" />
+
+        <attr name="drawableWidth" format="dimension" />
+        <attr name="drawableHeight" format="dimension" />
+        <attr name="drawableScale" format="float" />
+        <attr name="urlRegion" format="boolean" />
+        <attr name="type">
+            <enum name="oval" value="1" />
+            <enum name="rect" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundRectView">
+        <attr name="roundRectRadius" format="dimension" />
+        <attr name="roundRectColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SwipeRevealLayout">
+        <attr name="dragEdge">
+            <flag name="left" value="1" />
+            <flag name="right" value="2" />
+            <flag name="top" value="4" />
+            <flag name="bottom" value="8" />
+        </attr>
+
+        <attr name="mode">
+            <enum name="normal" value="0" />
+            <enum name="same_level" value="1" />
+        </attr>
+
+        <attr name="flingVelocity" format="integer" />
+
+        <attr name="minDistRequestDisallowParent" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TabControlView">
+        <!--文字字体的大小，默认14sp-->
+        <attr name="tcv_textSize" format="dimension" />
+        <!--没选中的文字颜色，默认#299EE3-->
+        <attr name="tcv_unselectedTextColor" format="reference" />
+        <!--选中的文字颜色， 默认Color.WHITE-->
+        <attr name="tcv_selectedTextColor" format="reference" />
+        <!--没选中的背景颜色， 默认Color.TRANSPARENT-->
+        <attr name="tcv_unselectedColor" format="reference" />
+        <!--选中的背景颜色， 默认#299EE3-->
+        <attr name="tcv_selectedColor" format="reference" />
+        <!--边框宽度，默认1dp-->
+        <attr name="tcv_strokeWidth" format="dimension" />
+        <!--选项卡间的padding-->
+        <attr name="tcv_item_padding" format="dimension" />
+        <!--选项卡水平间的padding-->
+        <attr name="tcv_item_padding_horizontal" format="dimension" />
+        <!--选项卡垂直间的padding-->
+        <attr name="tcv_item_padding_vertical" format="dimension" />
+        <!--选项卡中展示的内容-->
+        <attr name="tcv_items" format="reference" />
+        <!--选项卡中选中的内容（默认和展示的一样）-->
+        <attr name="tcv_values" format="reference" />
+        <!--是否等宽显示，默认false-->
+        <attr name="tcv_equalWidth" format="boolean" />
+        <!--是否伸展开，填充整个父布局，默认false-->
+        <attr name="tcv_stretch" format="boolean" />
+        <!--默认选中项的索引-->
+        <attr name="tcv_defaultSelection" format="integer" />
+        <!--选中drawable-->
+        <attr name="tcv_selectedDrawable" format="reference" />
+        <!--未选中drawable-->
+        <attr name="tcv_unselectedDrawable" format="reference" />
+    </declare-styleable>
+
+    <!--可伸展的布局-->
+    <declare-styleable name="ExpandableLayout">
+        <!--动画持续的时间，默认是300ms-->
+        <attr name="el_duration" format="integer" />
+        <!--是否是展开的，默认是false-->
+        <attr name="el_expanded" format="boolean" />
+        <!--视差效果，默认是1-->
+        <attr name="el_parallax" format="float" />
+        <!--对齐方式，默认是VERTICAL，垂直-->
+        <attr name="android:orientation" />
+    </declare-styleable>
+</resources>

@@ -12,3 +12,31 @@
 /captures
 .externalNativeBuild
 .cxx
+
+.gradle
+/app/.externalNativeBuild
+/app/class_files.txt
+bin
+tmp
+gen
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+
+
+#################
+## #IntelliJ IDEA
+#################
+.idea
+*.iml
+*.ipr
+*.iws
+out
+

@@ -115,6 +115,28 @@ fun <T> BaseVmFragment<*>.parseState(
     }
 }
 
+fun <T> BaseVmFragment<*>.parseStateNull(
+    resultState: ResultState<T?>,
+    onSuccess: (T?) -> Unit,
+    onError: ((AppException) -> Unit)? = null,
+    onLoading: (() -> Unit)? = null
+) {
+    when (resultState) {
+        is ResultState.Loading -> {
+            showLoading(resultState.loadingMessage)
+            onLoading?.invoke()
+        }
+        is ResultState.Success -> {
+            dismissLoading()
+            onSuccess(resultState.data)
+        }
+        is ResultState.Error -> {
+            dismissLoading()
+            onError?.run { this(resultState.error) }
+        }
+    }
+}
+
 /**
  * net request 不校验请求结果数据是否是成功
  * @param block 请求体方法
@@ -138,7 +160,8 @@ fun <T> BaseViewModel.request(
         }.onSuccess {
             resultState.paresResult(it)
         }.onFailure {
-            it.message?.loge("JetpackMvvm")
+
+            it.message?.loge("HttpLog")
             resultState.paresException(it)
         }
     }
@@ -167,7 +190,7 @@ fun <T> BaseViewModel.requestNoCheck(
         }.onSuccess {
             resultState.paresResult(it)
         }.onFailure {
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("HttpLog")
             resultState.paresException(it)
         }
     }
@@ -208,7 +231,7 @@ fun <T> BaseViewModel.request(
                 }
             }.onFailure { e ->
                 //打印错误消息
-                e.message?.loge("JetpackMvvm")
+                e.message?.loge("HttpLog")
                 //失败回调
                 error(ExceptionHandle.handleException(e))
             }
@@ -216,7 +239,7 @@ fun <T> BaseViewModel.request(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("HttpLog")
             //失败回调
             error(ExceptionHandle.handleException(it))
         }
@@ -253,7 +276,7 @@ fun <T> BaseViewModel.requestNoCheck(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("HttpLog")
             //失败回调
             error(ExceptionHandle.handleException(it))
         }
