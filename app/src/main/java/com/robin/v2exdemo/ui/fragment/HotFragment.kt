@@ -55,7 +55,7 @@ class HotFragment : BaseFragment<HotViewModel, FragmentHotBinding>() {
             run {
                 when(position){
                     0->{
-                        nav().navigate(R.id.action_to_gLDemoFragment)
+                        nav().navigateAction(R.id.action_to_gLDemoFragment)
                     }
                 }
             }

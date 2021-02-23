@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_gl_demo.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.nav
+import me.hgj.jetpackmvvm.ext.navigateAction
 
 class GLDemoFragment : BaseFragment<BaseViewModel, FragmentGlDemoBinding>() {
     private val renderAdapter by lazy { RenderAdapter(arrayListOf()) }
@@ -31,7 +32,7 @@ class GLDemoFragment : BaseFragment<BaseViewModel, FragmentGlDemoBinding>() {
         renderAdapter.setOnItemClickListener { adapter, view, position ->
             run {
                 val renderModel = renderAdapter.data[position]
-                nav().navigate(renderModel.mType, Bundle().apply {
+                nav().navigateAction(renderModel.mType, Bundle().apply {
                     putString("glTitle", renderModel.mTitle)
                 })
             }

@@ -152,10 +152,10 @@ class ShowFragment : BaseFragment<ShowViewModel, FragmentShowBinding>(),
         }
         when (position) {
             0 -> {
-                nav().navigate(R.id.action_to_uiListFragment)
+                nav().navigateAction(R.id.action_to_uiListFragment)
             }
             1 -> {
-                nav().navigate(R.id.action_to_gLDemoFragment)
+                nav().navigateAction(R.id.action_to_gLDemoFragment)
             }
         }
 

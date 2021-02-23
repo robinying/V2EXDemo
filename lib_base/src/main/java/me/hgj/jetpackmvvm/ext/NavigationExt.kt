@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import me.hgj.jetpackmvvm.navigation.NavHostFragment
+import java.lang.Exception
 
 /**
  * 作者　: hegaojian
@@ -32,7 +33,11 @@ fun NavController.navigateAction(resId: Int, bundle: Bundle? = null, interval: L
     val currentTime = System.currentTimeMillis()
     if (currentTime >= lastNavTime + interval) {
         lastNavTime = currentTime
-        navigate(resId, bundle)
+        try {
+            navigate(resId, bundle)
+        } catch (ignore: Exception) {
+
+        }
     }
 }
 
