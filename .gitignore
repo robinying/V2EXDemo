@@ -45,3 +45,6 @@ out
 key/
 *.jks
 *.keystore
+
+# 本地审查文档不入库
+docs/
