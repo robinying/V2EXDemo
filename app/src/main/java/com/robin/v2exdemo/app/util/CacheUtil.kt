@@ -1,7 +1,5 @@
 package com.robin.v2exdemo.app.util
 
-import android.text.TextUtils
-import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 
 object CacheUtil {
@@ -20,26 +18,6 @@ object CacheUtil {
     fun setIsLogin(isLogin: Boolean) {
         val kv = MMKV.mmkvWithID("app")
         kv.encode("login", isLogin)
-    }
-
-    fun setAccount(phone:String){
-        val kv = MMKV.mmkvWithID("app")
-        kv.encode("account",phone)
-    }
-
-    fun getAccount(): String? {
-        val kv = MMKV.mmkvWithID("app")
-        return kv.decodeString("account")
-    }
-
-    fun setPassword(password:String){
-        val kv = MMKV.mmkvWithID("app")
-        kv.encode("password",password)
-    }
-
-    fun getPassword(): String?  {
-        val kv = MMKV.mmkvWithID("app")
-        return kv.decodeString("password")
     }
 
     fun isStoreInfo(): Boolean {

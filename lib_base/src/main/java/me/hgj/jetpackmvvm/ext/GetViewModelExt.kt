@@ -10,10 +10,23 @@ import java.lang.reflect.ParameterizedType
 
 /**
  * 获取当前类绑定的泛型ViewModel-clazz
+ * 沿继承链向上查找第一个 BaseViewModel 子类的泛型实参，
+ * 允许在业务基类与具体页面之间多继承几层
  */
 @Suppress("UNCHECKED_CAST")
 fun <VM> getVmClazz(obj: Any): VM {
-    return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as VM
+    var clazz: Class<*>? = obj.javaClass
+    while (clazz != null) {
+        val genericSuperclass = clazz.genericSuperclass
+        if (genericSuperclass is ParameterizedType) {
+            genericSuperclass.actualTypeArguments
+                .filterIsInstance<Class<*>>()
+                .firstOrNull { BaseViewModel::class.java.isAssignableFrom(it) }
+                ?.let { return it as VM }
+        }
+        clazz = clazz.superclass
+    }
+    throw IllegalStateException("无法从 ${obj.javaClass.name} 的继承链中解析出 ViewModel 泛型")
 }
 
 /**

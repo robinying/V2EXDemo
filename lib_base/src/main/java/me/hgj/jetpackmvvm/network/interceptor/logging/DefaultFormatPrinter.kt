@@ -8,6 +8,7 @@ import me.hgj.jetpackmvvm.util.CharacterHandler.Companion.xmlFormat
 import me.hgj.jetpackmvvm.util.LogUtils
 import okhttp3.MediaType
 import okhttp3.Request
+import java.util.Locale
 
 /**
  * 作者　: hegaojian
@@ -320,6 +321,22 @@ class DefaultFormatPrinter : FormatPrinter{
         }
 
         /**
+         * 脱敏 Authorization/Cookie 等凭证类请求头，避免 token 明文进入 logcat
+         */
+        private fun maskSensitiveHeader(headerLine: String): String {
+            val index = headerLine.indexOf(':')
+            if (index <= 0) {
+                return headerLine
+            }
+            val name = headerLine.substring(0, index).trim().lowercase(Locale.getDefault())
+            return if (name == "authorization" || name == "cookie" || name == "set-cookie") {
+                headerLine.substring(0, index) + ": ******"
+            } else {
+                headerLine
+            }
+        }
+
+        /**
          * 对 `header` 按规定的格式进行处理
          *
          * @param header
@@ -339,11 +356,11 @@ class DefaultFormatPrinter : FormatPrinter{
                     } else {
                         CENTER_LINE
                     }
-                    builder.append(tag).append(headers[i]).append("\n")
+                    builder.append(tag).append(maskSensitiveHeader(headers[i])).append("\n")
                 }
             } else {
                 for (item in headers) {
-                    builder.append(tag).append(item).append("\n")
+                    builder.append(tag).append(maskSensitiveHeader(item)).append("\n")
                 }
             }
             return builder.toString()

@@ -1,7 +1,5 @@
 package com.robin.v2exdemo.app
 
-import android.R
-import android.hardware.Camera
 import androidx.multidex.MultiDex
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.blankj.utilcode.util.Utils
@@ -9,6 +7,7 @@ import com.didichuxing.doraemonkit.DoraemonKit
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.robin.v2exdemo.BuildConfig
+import com.robin.v2exdemo.R
 import com.robin.v2exdemo.app.ext.getProcessName
 import com.robin.v2exdemo.app.util.ConstantUtil
 import com.robin.v2exdemo.ui.activity.ErrorActivity
@@ -38,7 +37,7 @@ class App : BaseApp() {
 
         init {
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-                layout.setPrimaryColorsId(com.robin.v2exdemo.R.color.colorPrimary, R.color.white)
+                layout.setPrimaryColorsId(R.color.colorPrimary, R.color.white)
                 BezierRadarHeader(context)
             }
         }

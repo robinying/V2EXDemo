@@ -40,3 +40,8 @@ gen
 *.iws
 out
 
+
+# 签名密钥材料不入库
+key/
+*.jks
+*.keystore

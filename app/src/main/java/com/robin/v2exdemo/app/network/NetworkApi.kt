@@ -8,6 +8,7 @@ import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.network.BaseNetworkApi
 import me.hgj.jetpackmvvm.network.CoroutineCallAdapterFactory
 import me.hgj.jetpackmvvm.network.interceptor.CacheInterceptor
+import com.robin.v2exdemo.BuildConfig
 import me.hgj.jetpackmvvm.network.interceptor.logging.LogInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -53,8 +54,10 @@ class NetworkApi : BaseNetworkApi() {
             addInterceptor(MyHeadInterceptor())
             //添加缓存拦截器 可传入缓存天数，不传默认7天
             addInterceptor(CacheInterceptor())
-            // 日志拦截器
-            addInterceptor(LogInterceptor())
+            // 日志拦截器：仅 debug 构建开启（凭证类请求头已脱敏）
+            addInterceptor(
+                LogInterceptor(if (BuildConfig.DEBUG) LogInterceptor.Level.ALL else LogInterceptor.Level.NONE)
+            )
             //超时时间 连接、读、写
             connectTimeout(10, TimeUnit.SECONDS)
             readTimeout(5, TimeUnit.SECONDS)

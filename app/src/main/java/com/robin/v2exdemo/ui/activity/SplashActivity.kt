@@ -53,6 +53,10 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
             Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
             override fun onAnimationEnd(animation: Animator) {
+                // Activity 已结束时不再跳转，避免对已销毁实例 startActivity
+                if (isFinishing || isDestroyed) {
+                    return
+                }
                 // 存储权限门禁已移除：targetSdk 33+ 上 WRITE_EXTERNAL_STORAGE 恒为拒绝，
                 // 保留原逻辑会导致启动后立即 finish()
                 selectJump()

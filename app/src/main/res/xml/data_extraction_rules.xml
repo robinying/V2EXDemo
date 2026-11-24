@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- allowBackup 已关闭；此规则作为纵深防御，若后续重新开启备份也排除凭证数据 -->
 <data-extraction-rules>
     <cloud-backup>
-        <include domain="sharedpref" path="." />
-        <include domain="file" path="." />
+        <exclude domain="file" path="mmkv" />
+        <exclude domain="sharedpref" path="." />
     </cloud-backup>
     <device-transfer>
-        <include domain="sharedpref" path="." />
-        <include domain="file" path="." />
+        <exclude domain="file" path="mmkv" />
+        <exclude domain="sharedpref" path="." />
     </device-transfer>
 </data-extraction-rules>

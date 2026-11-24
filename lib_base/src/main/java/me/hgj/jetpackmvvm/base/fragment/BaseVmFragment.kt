@@ -45,7 +45,10 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mActivity = context as AppCompatActivity
+        mActivity = context as? AppCompatActivity
+            ?: throw IllegalStateException(
+                "${javaClass.simpleName} 的宿主必须是 AppCompatActivity，实际为 ${context.javaClass.name}"
+            )
         ParamUtil.initParam(this)
     }
 

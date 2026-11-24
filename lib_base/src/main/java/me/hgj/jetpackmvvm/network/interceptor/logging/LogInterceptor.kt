@@ -16,15 +16,21 @@ import java.util.concurrent.TimeUnit
 
 class LogInterceptor : Interceptor {
     private val mPrinter: FormatPrinter = DefaultFormatPrinter()
-    private val printLevel =
-        Level.ALL
+    private var printLevel =
+        Level.NONE
 
     constructor() {}
-    constructor(printLevel: Level?) {}
+    constructor(printLevel: Level?) {
+        this.printLevel = printLevel ?: Level.NONE
+    }
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
+        //关闭日志时直接放行，避免把响应体全量读入内存
+        if (printLevel == Level.NONE) {
+            return chain.proceed(request)
+        }
         val logRequest =
             printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.REQUEST
         if (logRequest) {
@@ -53,7 +59,7 @@ class LogInterceptor : Interceptor {
 
         //打印响应结果
         var bodyString: String? = null
-        if (responseBody != null && isParseable(responseBody.contentType())) {
+        if (logResponse && responseBody != null && isParseable(responseBody.contentType())) {
             bodyString = printResult(request, originalResponse, logResponse)
         }
         if (logResponse) {

@@ -18,7 +18,6 @@ import me.hgj.jetpackmvvm.ext.navigateAction
 
 class GLDemoFragment : BaseFragment<BaseViewModel, FragmentGlDemoBinding>() {
     private val renderAdapter by lazy { RenderAdapter(arrayListOf()) }
-    private val renderDataList: MutableList<RenderBean> = arrayListOf()
 
     override fun layoutId() = R.layout.fragment_gl_demo
 
@@ -35,21 +34,10 @@ class GLDemoFragment : BaseFragment<BaseViewModel, FragmentGlDemoBinding>() {
                 })
             }
         }
-        renderDataList.add(
-            RenderBean(
-                "基本使用",
-                R.id.action_to_gLOneFragment,
-                GLOneFragment::class.java
-            )
-        )
-        renderDataList.add(
-            RenderBean(
-                "空气曲棍球绘制",
-                R.id.action_to_airHockeyFragment,
-                AirHockeyFragment::class.java
-            )
-        )
-        renderDataList.add(
+        //局部构建列表，避免视图重建时向成员列表重复累加
+        val renderDataList = listOf(
+            RenderBean("基本使用", R.id.action_to_gLOneFragment, GLOneFragment::class.java),
+            RenderBean("空气曲棍球绘制", R.id.action_to_airHockeyFragment, AirHockeyFragment::class.java),
             RenderBean("基本图形绘制", R.id.action_to_basicGraphFragment, BasicGraphFragment::class.java)
         )
         renderAdapter.setList(renderDataList)

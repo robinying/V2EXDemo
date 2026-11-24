@@ -7,7 +7,6 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
-import android.preference.PreferenceManager
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
@@ -26,9 +25,8 @@ object SettingUtil {
      * 获取当前主题颜色
      */
     fun getColor(context: Context): Int {
-        val setting = PreferenceManager.getDefaultSharedPreferences(context)
         val defaultColor = ContextCompat.getColor(context, R.color.colorPrimary)
-        val color = setting.getInt("color", defaultColor)
+        val color = MMKV.mmkvWithID("app").decodeInt("color", defaultColor)
         return if (color != 0 && Color.alpha(color) != 255) {
             defaultColor
         } else {
@@ -41,8 +39,7 @@ object SettingUtil {
      * 设置主题颜色
      */
     fun setColor(context: Context, color: Int) {
-        val setting = PreferenceManager.getDefaultSharedPreferences(context)
-        setting.edit().putInt("color", color).apply()
+        MMKV.mmkvWithID("app").encode("color", color)
     }
 
     /**

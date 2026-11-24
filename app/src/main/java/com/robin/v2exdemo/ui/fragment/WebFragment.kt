@@ -1,5 +1,6 @@
 package com.robin.v2exdemo.ui.fragment
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.just.agentweb.AgentWeb
 import com.robin.v2exdemo.R
@@ -62,6 +65,15 @@ class WebFragment : BaseFragment<BaseViewModel, FragmentWebBinding>() {
     override fun lazyLoadData() {
         //加载网页
         mAgentWeb = preWeb?.go(url)
+        //页面由服务端下发，关闭本地文件访问，避免 file:// 等协议读取应用私有数据
+        mAgentWeb?.webCreator?.webView?.settings?.apply {
+            allowFileAccess = false
+            allowContentAccess = false
+            @Suppress("DEPRECATION")
+            allowFileAccessFromFileURLs = false
+            @Suppress("DEPRECATION")
+            allowUniversalAccessFromFileURLs = false
+        }
         requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -88,13 +100,17 @@ class WebFragment : BaseFragment<BaseViewModel, FragmentWebBinding>() {
                 mAgentWeb?.urlLoader?.reload()
             }
             R.id.web_browser -> {
-                //用浏览器打开
-                try {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                //用浏览器打开，仅允许 http/https，避免 intent:// 等协议被利用
+                val uri = Uri.parse(url)
+                if (uri.scheme == "http" || uri.scheme == "https") {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, uri))
+                    } catch (e: ActivityNotFoundException) {
+                        LogUtils.e("WebFragment", e)
+                    }
+                } else {
+                    ToastUtils.showShort("不支持的链接")
                 }
-
             }
         }
         return super.onOptionsItemSelected(item)

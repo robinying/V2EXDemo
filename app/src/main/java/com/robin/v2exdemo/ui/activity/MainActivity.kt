@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.robin.v2exdemo.R
 import com.robin.v2exdemo.app.base.BaseActivity
@@ -23,8 +24,16 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
         StatusBarUtil.setColor(this, SettingUtil.getColor(this), 0)
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val nav = Navigation.findNavController(this@MainActivity, R.id.host_fragment)
-                if (nav.currentDestination != null && nav.currentDestination!!.id != R.id.mainFragment) {
+                //NavHost 尚未就绪时 findNavController 会抛异常，按主页逻辑处理避免崩溃
+                val nav = try {
+                    Navigation.findNavController(this@MainActivity, R.id.host_fragment)
+                } catch (e: IllegalStateException) {
+                    LogUtils.e("MainActivity", e)
+                    null
+                }
+                if (nav != null && nav.currentDestination?.id != null &&
+                    nav.currentDestination?.id != R.id.mainFragment
+                ) {
                     //如果当前界面不是主页，那么直接调用返回即可
                     nav.navigateUp()
                 } else {

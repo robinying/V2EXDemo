@@ -16,17 +16,33 @@ import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
  */
 abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmFragment<VM>() {
 
-    //该类绑定的ViewDataBinding
-    lateinit var mDataBinding: DB
+    private var _binding: DB? = null
+
+    //该类绑定的ViewDataBinding，仅在 onCreateView 到 onDestroyView 之间有效
+    val mDataBinding: DB
+        get() = _binding
+            ?: throw IllegalStateException("${javaClass.simpleName} 的 mDataBinding 只能在 onCreateView 与 onDestroyView 之间访问")
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mDataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        mDataBinding.lifecycleOwner = this
-        return mDataBinding.root
+        _binding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
+        return _binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //绑定到 viewLifecycleOwner：视图销毁后 LiveData 不再驱动视图
+        _binding?.lifecycleOwner = viewLifecycleOwner
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        //视图销毁时解绑并释放引用，避免 Fragment 进入回退栈后泄漏整棵视图树
+        _binding?.unbind()
+        _binding = null
+        super.onDestroyView()
     }
 
 }
