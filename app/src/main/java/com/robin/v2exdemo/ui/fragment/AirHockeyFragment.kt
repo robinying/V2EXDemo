@@ -8,8 +8,6 @@ import com.robin.v2exdemo.app.ext.initCenterClose
 import com.robin.v2exdemo.app.util.OpenGlUtil
 import com.robin.v2exdemo.databinding.FragmentAirHockeyBinding
 import com.robin.v2exdemo.widget.opengl.AirHockeyRender
-import kotlinx.android.synthetic.main.fragment_air_hockey.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 
 
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
@@ -29,19 +27,19 @@ class AirHockeyFragment : BaseFragment<BaseViewModel, FragmentAirHockeyBinding>(
         }
         if (OpenGlUtil.supportsEs2(mActivity)) {
             val airHockeyRender = AirHockeyRender(mActivity)
-            gl_surfaceView.setEGLContextClientVersion(2)
-            gl_surfaceView.setRenderer(airHockeyRender)
+            mDataBinding.glSurfaceView.setEGLContextClientVersion(2)
+            mDataBinding.glSurfaceView.setRenderer(airHockeyRender)
         }
 
     }
 
     override fun onResume() {
         super.onResume()
-        gl_surfaceView.onResume()
+        mDataBinding.glSurfaceView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        gl_surfaceView.onPause()
+        mDataBinding.glSurfaceView.onPause()
     }
 }

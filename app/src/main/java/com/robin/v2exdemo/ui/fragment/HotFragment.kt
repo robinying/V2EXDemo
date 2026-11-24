@@ -20,7 +20,6 @@ import com.robin.v2exdemo.databinding.FragmentHotBinding
 import com.robin.v2exdemo.ui.adapter.HotAdapter
 import com.robin.v2exdemo.viewmodel.HotViewModel
 import com.robin.v2exdemo.widget.recyclerview.SpaceItemDecoration
-import kotlinx.android.synthetic.main.fragment_hot.*
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.ext.navigateAction
 import me.hgj.jetpackmvvm.ext.parseState
@@ -32,14 +31,14 @@ class HotFragment : BaseFragment<HotViewModel, FragmentHotBinding>() {
     override fun layoutId() = R.layout.fragment_hot
 
     override fun initView(savedInstanceState: Bundle?) {
-        refresh_layout.setOnRefreshListener {
+        mDataBinding.refreshLayout.setOnRefreshListener {
             mViewModel.getHotList()
         }
-        loadsir = loadServiceInit(recycler_view) {
+        loadsir = loadServiceInit(mDataBinding.recyclerView) {
             //点击重试时触发的操作
             mViewModel.getHotList()
         }
-        recycler_view.init(LinearLayoutManager(mActivity), hotAdapter).let {
+        mDataBinding.recyclerView.init(LinearLayoutManager(mActivity), hotAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), true))
         }
         hotAdapter.setOnItemClickListener { _, view, position ->
@@ -73,8 +72,8 @@ class HotFragment : BaseFragment<HotViewModel, FragmentHotBinding>() {
         super.createObserver()
         mViewModel.hotData.observe(viewLifecycleOwner, Observer { resultState ->
             run {
-                if (refresh_layout.isRefreshing) {
-                    refresh_layout.finishRefresh()
+                if (mDataBinding.refreshLayout.isRefreshing) {
+                    mDataBinding.refreshLayout.finishRefresh()
                 }
                 parseState(
                     resultState,
@@ -87,7 +86,7 @@ class HotFragment : BaseFragment<HotViewModel, FragmentHotBinding>() {
                             isFirstEmpty = it.isEmpty(),
                             listData = it
                         )
-                        loadListData(listDataUiState, hotAdapter, loadsir, recycler_view)
+                        loadListData(listDataUiState, hotAdapter, loadsir, mDataBinding.recyclerView)
                     },
                     {
                         showMessage(it.errorMsg)

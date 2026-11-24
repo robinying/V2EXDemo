@@ -15,7 +15,7 @@ object LogUtils {
         if (!openLog || TextUtils.isEmpty(msg)) {
             return
         }
-        Log.d(tag, msg)
+        Log.d(tag ?: DEFAULT_TAG, msg!!)
     }
 
     fun debugInfo(msg: String?) {
@@ -29,7 +29,7 @@ object LogUtils {
         if (!openLog || TextUtils.isEmpty(msg)) {
             return
         }
-        Log.w(tag, msg)
+        Log.w(tag ?: DEFAULT_TAG, msg!!)
     }
 
     fun warnInfo(msg: String?) {

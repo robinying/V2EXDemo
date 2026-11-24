@@ -65,7 +65,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
      * 创建viewModel
      */
     private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return ViewModelProvider(this).get(getVmClazz<Class<VM>>(this))
     }
     /**
      * 创建LiveData数据观察者

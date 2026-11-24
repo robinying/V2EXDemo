@@ -16,8 +16,6 @@ import com.robin.v2exdemo.app.ext.hideSoftKeyboard
 import com.robin.v2exdemo.app.ext.initClose
 import com.robin.v2exdemo.app.util.CacheUtil
 import com.robin.v2exdemo.databinding.FragmentWebBinding
-import kotlinx.android.synthetic.main.fragment_web.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.util.Param
@@ -55,7 +53,7 @@ class WebFragment : BaseFragment<BaseViewModel, FragmentWebBinding>() {
             }
         }
         preWeb = AgentWeb.with(this)
-            .setAgentWebParent(web_content, LinearLayout.LayoutParams(-1, -1))
+            .setAgentWebParent(mDataBinding.webContent, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()
             .createAgentWeb()
             .ready()

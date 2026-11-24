@@ -12,8 +12,6 @@ import com.robin.v2exdemo.app.ext.initCenterClose
 
 import com.robin.v2exdemo.databinding.FragmentGlOneBinding
 import com.robin.v2exdemo.widget.opengl.GLOneRender
-import kotlinx.android.synthetic.main.fragment_gl_one.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.util.Param
@@ -31,9 +29,9 @@ class GLOneFragment : BaseFragment<BaseViewModel, FragmentGlOneBinding>() {
         }
         if (supportsEs2(mActivity)) {
             val glOneRender = GLOneRender(mActivity)
-            gl_surfaceView.setEGLContextClientVersion(2)
-            gl_surfaceView.setRenderer(glOneRender)
-            gl_surfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
+            mDataBinding.glSurfaceView.setEGLContextClientVersion(2)
+            mDataBinding.glSurfaceView.setRenderer(glOneRender)
+            mDataBinding.glSurfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
         }
     }
 
@@ -45,12 +43,12 @@ class GLOneFragment : BaseFragment<BaseViewModel, FragmentGlOneBinding>() {
 
     override fun onResume() {
         super.onResume()
-        gl_surfaceView.onResume()
+        mDataBinding.glSurfaceView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        gl_surfaceView.onPause()
+        mDataBinding.glSurfaceView.onPause()
     }
 
 }

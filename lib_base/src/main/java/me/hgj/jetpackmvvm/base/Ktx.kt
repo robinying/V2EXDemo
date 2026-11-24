@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ProcessLifecycleOwner
 import me.hgj.jetpackmvvm.ext.lifecycle.KtxAppLifeObserver
 import me.hgj.jetpackmvvm.ext.lifecycle.KtxLifeCycleCallBack
@@ -38,9 +39,12 @@ class Ktx : ContentProvider() {
     private fun install(application: Application) {
         app = application
         mNetworkStateReceive = NetworkStateReceive()
-        app.registerReceiver(
+        // targetSdk 34+ 必须显式声明导出标志，否则 Android 14+ 抛 SecurityException
+        ContextCompat.registerReceiver(
+            app,
             mNetworkStateReceive,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION),
+            ContextCompat.RECEIVER_NOT_EXPORTED
         )
         if (watchActivityLife) application.registerActivityLifecycleCallbacks(KtxLifeCycleCallBack())
         if (watchAppLife) ProcessLifecycleOwner.get().lifecycle.addObserver(KtxAppLifeObserver)

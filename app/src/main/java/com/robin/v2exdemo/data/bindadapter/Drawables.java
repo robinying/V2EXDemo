@@ -1,5 +1,7 @@
 package com.robin.v2exdemo.data.bindadapter;
 
+import android.annotation.SuppressLint;
+
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -881,6 +883,7 @@ public class Drawables {
         return GradientDrawable.Orientation.TOP_BOTTOM;
     }
 
+    @SuppressLint("SoonBlockedPrivateApi")
     private static void setRingValue(GradientDrawable drawable,
                                      Float thickness, Float thicknessRatio,
                                      Float innerRadius, Float innerRadiusRatio) {
@@ -911,9 +914,8 @@ public class Drawables {
                 mInnerRadiusRatio.setAccessible(true);
                 mInnerRadiusRatio.setFloat(mGradientState.get(drawable), dip2px(innerRadiusRatio));
             }
-        } catch (NoSuchFieldException t) {
-            t.printStackTrace();
-        } catch (IllegalAccessException t) {
+        } catch (Exception t) {
+            // Android 15+ 对 GradientDrawable 私有字段的反射访问受限，失败时忽略环形参数
             t.printStackTrace();
         }
     }

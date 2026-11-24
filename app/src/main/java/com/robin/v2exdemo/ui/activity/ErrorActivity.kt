@@ -11,8 +11,6 @@ import com.robin.v2exdemo.app.ext.init
 import com.robin.v2exdemo.app.util.SettingUtil
 import com.robin.v2exdemo.app.util.StatusBarUtil
 import com.robin.v2exdemo.databinding.ActivityErrorBinding
-import kotlinx.android.synthetic.main.activity_error.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.view.clickNoRepeat
 
@@ -28,14 +26,14 @@ class ErrorActivity : BaseActivity<BaseViewModel, ActivityErrorBinding>() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(SettingUtil.getColor(this)))
         StatusBarUtil.setColor(this, SettingUtil.getColor(this), 0)
         val config = CustomActivityOnCrash.getConfigFromIntent(intent)
-        errorRestart.clickNoRepeat {
+        mDataBinding.errorRestart.clickNoRepeat {
             config?.run {
                 CustomActivityOnCrash.restartApplication(this@ErrorActivity, this)
             }
         }
         CustomActivityOnCrash.getStackTraceFromIntent(intent)?.let {
             if (BuildConfig.DEBUG) {
-                tv_error_info.text = it
+                mDataBinding.tvErrorInfo.text = it
             }
         }
 

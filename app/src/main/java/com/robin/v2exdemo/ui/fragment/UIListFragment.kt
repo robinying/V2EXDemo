@@ -11,8 +11,6 @@ import com.robin.v2exdemo.data.model.bean.UIRouterBean
 import com.robin.v2exdemo.databinding.FragmentUiListBinding
 import com.robin.v2exdemo.ui.adapter.UIViewAdapter
 import com.robin.v2exdemo.widget.recyclerview.SpaceItemDecoration
-import kotlinx.android.synthetic.main.fragment_ui_list.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 class UIListFragment : BaseFragment<BaseViewModel, FragmentUiListBinding>() {
@@ -24,7 +22,7 @@ class UIListFragment : BaseFragment<BaseViewModel, FragmentUiListBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         toolbar.initCenter(mActivity, "自定义界面")
-        recycler_view.init(LinearLayoutManager(mActivity), uiViewAdapter).let {
+        mDataBinding.recyclerView.init(LinearLayoutManager(mActivity), uiViewAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
         }
         uiViewList.add(UIRouterBean("测试一", R.id.action_to_gLOneFragment))

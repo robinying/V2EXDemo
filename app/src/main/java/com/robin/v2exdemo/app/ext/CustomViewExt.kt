@@ -27,7 +27,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.robin.v2exdemo.R
@@ -37,19 +38,11 @@ import com.robin.v2exdemo.widget.glide.CornerTransform
 import com.robin.v2exdemo.widget.loadCallBack.ErrorCallback
 import com.robin.v2exdemo.widget.loadCallBack.LoadingCallback
 import com.robin.v2exdemo.widget.recyclerview.DefineLoadMoreView
-import com.robin.v2exdemo.widget.viewpager.ScaleTransitionPagerTitleView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.util.dp2px
 import me.hgj.jetpackmvvm.ext.util.toHtml
-import net.lucode.hackware.magicindicator.MagicIndicator
-import net.lucode.hackware.magicindicator.buildins.UIUtil
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 
 /**
  * 作者　: hegaojian
@@ -244,8 +237,8 @@ fun Toolbar.initClose(
 
 /**
  * 根据控件的类型设置主题，注意，控件具有优先级， 基本类型的控件建议放到最后，像 Textview，FragmentLayout，不然会出现问题，
- * 列如下面的BottomNavigationViewEx他的顶级父控件为FragmentLayout，如果先 is Fragmentlayout判断在 is BottomNavigationViewEx上面
- * 那么就会直接去执行 is FragmentLayout的代码块 跳过 is BottomNavigationViewEx的代码块了
+ * 列如下面的BottomNavigationView他的顶级父控件为FragmentLayout，如果先 is Fragmentlayout判断在 is BottomNavigationView上面
+ * 那么就会直接去执行 is FragmentLayout的代码块 跳过 is BottomNavigationView的代码块了
  */
 fun setUiTheme(color: Int, vararg anyList: Any?) {
     anyList.forEach { view ->
@@ -256,7 +249,7 @@ fun setUiTheme(color: Int, vararg anyList: Any?) {
                     SettingUtil.getOneColorStateList(color)
                 is SmartRefreshLayout -> it.setPrimaryColorsId(color)
                 is DefineLoadMoreView -> it.setLoadViewColor(SettingUtil.getOneColorStateList(color))
-                is BottomNavigationViewEx -> {
+                is BottomNavigationView -> {
                     it.itemIconTintList = SettingUtil.getColorStateList(color)
                     it.itemTextColor = SettingUtil.getColorStateList(color)
                 }
@@ -282,72 +275,6 @@ fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int) {
     }
 }
 
-fun MagicIndicator.bindViewPager2(
-    viewPager: ViewPager2,
-    mStringList: ArrayList<String> = arrayListOf(),
-    action: (index: Int) -> Unit = {}
-) {
-    val commonNavigator = CommonNavigator(appContext)
-    commonNavigator.adapter = object : CommonNavigatorAdapter() {
-        override fun getCount(): Int {
-            return mStringList.size
-
-        }
-
-        override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-            return ScaleTransitionPagerTitleView(appContext).apply {
-                text = mStringList[index].toHtml()
-                textSize = 17f
-                normalColor = Color.GRAY
-                selectedColor = context.resources.getColor(R.color.colorPrimary)
-                setOnClickListener {
-                    viewPager.currentItem = index
-                    action.invoke(index)
-                }
-            }
-        }
-
-        override fun getIndicator(context: Context): IPagerIndicator {
-            return LinePagerIndicator(context).apply {
-                mode = LinePagerIndicator.MODE_EXACTLY
-                //线条的宽高度
-                lineHeight = UIUtil.dip2px(appContext, 3.0).toFloat()
-                lineWidth = UIUtil.dip2px(appContext, 30.0).toFloat()
-                //线条的圆角
-                roundRadius = UIUtil.dip2px(appContext, 6.0).toFloat()
-                startInterpolator = AccelerateInterpolator()
-                endInterpolator = DecelerateInterpolator(2.0f)
-                //线条的颜色
-                setColors(context.resources.getColor(R.color.colorPrimary))
-            }
-        }
-    }
-    this.navigator = commonNavigator
-
-    viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            this@bindViewPager2.onPageSelected(position)
-            action.invoke(position)
-        }
-
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            this@bindViewPager2.onPageScrolled(position, positionOffset, positionOffsetPixels)
-        }
-
-        override fun onPageScrollStateChanged(state: Int) {
-            super.onPageScrollStateChanged(state)
-            this@bindViewPager2.onPageScrollStateChanged(state)
-        }
-    })
-}
-
-
 fun ViewPager2.init(
     fragment: Fragment,
     fragments: ArrayList<Fragment>,
@@ -363,14 +290,11 @@ fun ViewPager2.init(
     return this
 }
 
-fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): BottomNavigationViewEx {
-    enableAnimation(true)
-    enableShiftingMode(false)
-    enableItemShiftingMode(true)
+fun BottomNavigationView.init(navigationItemSelectedAction: (Int) -> Unit): BottomNavigationView {
+    labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
     itemIconTintList = SettingUtil.getColorStateList(SettingUtil.getColor(appContext))
     itemTextColor = SettingUtil.getColorStateList(appContext)
-    setTextSize(12f)
-    setOnNavigationItemSelectedListener {
+    setOnItemSelectedListener {
         navigationItemSelectedAction.invoke(it.itemId)
         true
     }

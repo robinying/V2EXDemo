@@ -13,8 +13,6 @@ import com.robin.v2exdemo.databinding.FragmentBasicGraphBinding
 import com.robin.v2exdemo.widget.opengl.BasicShapeRender
 import com.robin.v2exdemo.widget.opengl.graph.Line
 import com.robin.v2exdemo.widget.opengl.graph.Point
-import kotlinx.android.synthetic.main.fragment_basic_graph.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.util.Param
@@ -39,10 +37,10 @@ class BasicGraphFragment : BaseFragment<BaseViewModel, FragmentBasicGraphBinding
         }
         basicShapeRender = BasicShapeRender(mActivity)
         if (OpenGlUtil.supportsEs2(mActivity)) {
-            gl_surfaceView.setEGLContextClientVersion(2)
+            mDataBinding.glSurfaceView.setEGLContextClientVersion(2)
             basicShapeRender.setShape(Line::class.java)
-            gl_surfaceView.setRenderer(basicShapeRender)
-            gl_surfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
+            mDataBinding.glSurfaceView.setRenderer(basicShapeRender)
+            mDataBinding.glSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
         }
 
     }
@@ -56,11 +54,11 @@ class BasicGraphFragment : BaseFragment<BaseViewModel, FragmentBasicGraphBinding
         when (item.itemId) {
             R.id.point -> {
                 basicShapeRender.setShape(Point::class.java)
-                gl_surfaceView.requestRender()
+                mDataBinding.glSurfaceView.requestRender()
             }
             R.id.line -> {
                 basicShapeRender.setShape(Line::class.java)
-                gl_surfaceView.requestRender()
+                mDataBinding.glSurfaceView.requestRender()
             }
             R.id.circle -> {
                 basicShapeRender.setShape(Point::class.java)
@@ -82,11 +80,11 @@ class BasicGraphFragment : BaseFragment<BaseViewModel, FragmentBasicGraphBinding
 
     override fun onResume() {
         super.onResume()
-        gl_surfaceView.onResume()
+        mDataBinding.glSurfaceView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        gl_surfaceView.onPause()
+        mDataBinding.glSurfaceView.onPause()
     }
 }

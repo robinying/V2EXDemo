@@ -3,6 +3,7 @@ package com.robin.v2exdemo.app.base
 import android.os.Bundle
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.ViewDataBinding
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -35,6 +36,10 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
     /**
      * 当前Fragment绑定的视图布局
      */
+    /** 通用标题栏，对应 include_toolbar.xml 中的 id */
+    protected val toolbar: Toolbar
+        get() = mDataBinding.root.findViewById(R.id.toolbar)
+
     abstract override fun layoutId(): Int
 
 

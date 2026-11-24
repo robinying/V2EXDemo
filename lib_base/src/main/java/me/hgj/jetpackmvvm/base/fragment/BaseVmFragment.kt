@@ -69,7 +69,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
      * 创建viewModel
      */
     private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return ViewModelProvider(this).get(getVmClazz<Class<VM>>(this))
     }
 
     /**

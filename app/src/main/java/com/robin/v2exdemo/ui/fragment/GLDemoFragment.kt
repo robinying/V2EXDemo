@@ -12,8 +12,6 @@ import com.robin.v2exdemo.data.model.bean.RenderBean
 import com.robin.v2exdemo.databinding.FragmentGlDemoBinding
 import com.robin.v2exdemo.ui.adapter.RenderAdapter
 import com.robin.v2exdemo.widget.recyclerview.SpaceItemDecoration
-import kotlinx.android.synthetic.main.fragment_gl_demo.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.ext.navigateAction
@@ -26,7 +24,7 @@ class GLDemoFragment : BaseFragment<BaseViewModel, FragmentGlDemoBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         toolbar.initCenter(mActivity, "OpenGLDemo")
-        recycler_view.init(LinearLayoutManager(mActivity), renderAdapter).let {
+        mDataBinding.recyclerView.init(LinearLayoutManager(mActivity), renderAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), true))
         }
         renderAdapter.setOnItemClickListener { adapter, view, position ->

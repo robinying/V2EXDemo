@@ -2,28 +2,27 @@ package com.robin.v2exdemo.ui.activity
 
 import android.animation.Animator
 import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.animation.*
-import com.blankj.utilcode.util.AppUtils
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.RotateAnimation
+import android.view.animation.ScaleAnimation
 import com.robin.v2exdemo.R
 import com.robin.v2exdemo.app.base.BaseActivity
 import com.robin.v2exdemo.databinding.ActivitySplashBinding
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.runtime.Permission
-import kotlinx.android.synthetic.main.activity_splash.*
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
 
+    // 启动页为全屏视觉，内容延伸至状态栏下方
+    override val applySystemBarInsets: Boolean = false
 
     override fun layoutId(): Int {
         return R.layout.activity_splash
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        val pm = this@SplashActivity.packageManager
         val scaleAnimation =
             ScaleAnimation(
                 0.5f,
@@ -49,35 +48,19 @@ class SplashActivity : BaseActivity<BaseViewModel, ActivitySplashBinding>() {
         animationSet.addAnimation(scaleAnimation)
         animationSet.addAnimation(rotateAnimation)
         animationSet.fillAfter = true
-        tv_app_name.startAnimation(animationSet)
-        lottie_view.addAnimatorListener(object :
+        mDataBinding.tvAppName.startAnimation(animationSet)
+        mDataBinding.lottieView.addAnimatorListener(object :
             Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
             override fun onAnimationEnd(animation: Animator) {
-                if (PackageManager.PERMISSION_GRANTED == pm.checkPermission(
-                        Permission.WRITE_EXTERNAL_STORAGE,
-                        AppUtils.getAppPackageName()
-                    )
-                ) {
-                    selectJump()
-                }
+                // 存储权限门禁已移除：targetSdk 33+ 上 WRITE_EXTERNAL_STORAGE 恒为拒绝，
+                // 保留原逻辑会导致启动后立即 finish()
+                selectJump()
             }
 
             override fun onAnimationCancel(animation: Animator) {}
             override fun onAnimationRepeat(animation: Animator) {}
         })
-        if (PackageManager.PERMISSION_GRANTED != pm.checkPermission(
-                Permission.WRITE_EXTERNAL_STORAGE,
-                AppUtils.getAppPackageName()
-            )
-        ) {
-            AndPermission.with(this)
-                .runtime()
-                .permission(Permission.Group.STORAGE)
-                .onGranted { selectJump() }
-                .onDenied { finish() }
-                .start()
-        }
     }
 
     private fun selectJump() {
